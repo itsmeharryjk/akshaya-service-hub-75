@@ -1,6 +1,5 @@
-
 import { Service, ScannedDocument } from "./types";
-import { FileText, FileCheck, FileSignature, User, CreditCard, Home, Landmark } from "lucide-react";
+import { FileText, FileCheck, FileSignature, User, CreditCard, Home, Landmark, Car, BadgeDollarSign, Building, Phone, FileIcon, IdCard } from "lucide-react";
 
 // Mock services data
 export const services: Service[] = [
@@ -186,6 +185,141 @@ export const services: Service[] = [
         required: false,
       }
     ]
+  },
+  {
+    id: "driving-license",
+    name: "Driving License",
+    icon: "IdCard",
+    description: "Apply for a new driving license or renew your existing one",
+    fee: 200,
+    requiredDocuments: [
+      {
+        id: "identity-proof",
+        name: "Identity Proof",
+        description: "Aadhaar card, voter ID, or any government issued identity card",
+        required: true,
+      },
+      {
+        id: "address-proof",
+        name: "Address Proof",
+        description: "Electricity bill, water bill, or any government issued address proof",
+        required: true,
+      },
+      {
+        id: "photos",
+        name: "Photos",
+        description: "Recent passport size photographs",
+        required: true,
+      }
+    ]
+  },
+  {
+    id: "vehicle-registration",
+    name: "Vehicle Registration",
+    icon: "Car",
+    description: "Register your vehicle or transfer ownership",
+    fee: 250,
+    requiredDocuments: [
+      {
+        id: "vehicle-invoice",
+        name: "Vehicle Invoice",
+        description: "Original invoice of the vehicle",
+        required: true,
+      },
+      {
+        id: "identity-proof",
+        name: "Identity Proof",
+        description: "Aadhaar card, voter ID, or any government issued identity card",
+        required: true,
+      },
+      {
+        id: "address-proof",
+        name: "Address Proof",
+        description: "Electricity bill, water bill, or any government issued address proof",
+        required: true,
+      }
+    ]
+  },
+  {
+    id: "income-tax",
+    name: "Income Tax",
+    icon: "BadgeDollarSign",
+    description: "File income tax returns or check status",
+    fee: 100,
+    requiredDocuments: [
+      {
+        id: "pan-card",
+        name: "PAN Card",
+        description: "Permanent Account Number card",
+        required: true,
+      },
+      {
+        id: "income-proof",
+        name: "Income Proof",
+        description: "Salary slips, Form 16, or other income documents",
+        required: true,
+      },
+      {
+        id: "investment-proof",
+        name: "Investment Proof",
+        description: "Documents related to tax-saving investments",
+        required: false,
+      }
+    ]
+  },
+  {
+    id: "land-tax",
+    name: "Land Tax",
+    icon: "Landmark",
+    description: "Pay land tax or get land tax certificate",
+    fee: 150,
+    requiredDocuments: [
+      {
+        id: "land-deed",
+        name: "Land Deed",
+        description: "Copy of the land deed or registration document",
+        required: true,
+      },
+      {
+        id: "identity-proof",
+        name: "Identity Proof",
+        description: "Aadhaar card, voter ID, or any government issued identity card",
+        required: true,
+      },
+      {
+        id: "tax-receipt",
+        name: "Previous Tax Receipt",
+        description: "Receipt of the last tax payment if applicable",
+        required: false,
+      }
+    ]
+  },
+  {
+    id: "property-tax",
+    name: "Property Tax",
+    icon: "Building",
+    description: "Pay property tax or get property tax certificate",
+    fee: 200,
+    requiredDocuments: [
+      {
+        id: "property-deed",
+        name: "Property Deed",
+        description: "Copy of the property deed or registration document",
+        required: true,
+      },
+      {
+        id: "identity-proof",
+        name: "Identity Proof",
+        description: "Aadhaar card, voter ID, or any government issued identity card",
+        required: true,
+      },
+      {
+        id: "tax-receipt",
+        name: "Previous Tax Receipt",
+        description: "Receipt of the last tax payment if applicable",
+        required: false,
+      }
+    ]
   }
 ];
 
@@ -232,7 +366,13 @@ export const getIconByName = (iconName: string) => {
     User,
     CreditCard,
     Home,
-    Landmark
+    Landmark,
+    Car,
+    BadgeDollarSign,
+    Building,
+    Phone,
+    FileIcon,
+    IdCard
   };
   
   return icons[iconName as keyof typeof icons] || FileText;

@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { services, getIconByName } from "@/lib/data-service";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -12,6 +13,11 @@ const Home: React.FC = () => {
 
   const handleServiceClick = (serviceId: string) => {
     navigate(`/service/${serviceId}`);
+  };
+
+  const handleCallAkshaya = () => {
+    // In a real app, this would initiate a phone call
+    window.location.href = "tel:+918000000000";
   };
 
   const filteredServices = services.filter(service => 
@@ -68,6 +74,19 @@ const Home: React.FC = () => {
             <p className="text-gray-500">No services found matching "{searchQuery}"</p>
           </div>
         )}
+
+        {/* Call Akshaya button */}
+        <div className="bg-white rounded-lg p-4 shadow-sm flex flex-col items-center">
+          <p className="text-sm text-gray-600 mb-3">Can't find what you're looking for?</p>
+          <Button 
+            variant="outline" 
+            className="flex items-center border-akshaya-primary text-akshaya-primary hover:bg-akshaya-light"
+            onClick={handleCallAkshaya}
+          >
+            <Phone size={18} className="mr-2" />
+            Call Akshaya Support
+          </Button>
+        </div>
 
         <div className="bg-white rounded-lg p-4 shadow-sm mt-6">
           <h3 className="text-md font-medium text-gray-800 mb-2">About Akshaya E-Services</h3>
