@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
 import { deleteDocument, getServiceById, getStoredDocuments } from "@/lib/data-service";
 import { ScannedDocument } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { Eye, Trash2, FileText } from "lucide-react";
+import { Eye, Trash2, FileText, X } from "lucide-react";
 
 const Documents: React.FC = () => {
   const [documents, setDocuments] = useState<ScannedDocument[]>([]);

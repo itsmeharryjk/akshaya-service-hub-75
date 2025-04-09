@@ -43,7 +43,11 @@ const ServiceDetails: React.FC = () => {
   };
 
   if (!service) {
-    return <Layout title="Loading..." showBack />;
+    return (
+      <Layout title="Loading..." showBack>
+        <div>Loading service details...</div>
+      </Layout>
+    );
   }
 
   return (
