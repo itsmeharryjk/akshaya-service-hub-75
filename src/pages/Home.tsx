@@ -1,15 +1,23 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { services, getIconByName } from "@/lib/data-service";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleServiceClick = (serviceId: string) => {
     navigate(`/service/${serviceId}`);
   };
+
+  const filteredServices = services.filter(service => 
+    service.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    service.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <Layout title="Akshaya E-Services">
@@ -23,24 +31,43 @@ const Home: React.FC = () => {
         </div>
 
         <h3 className="text-lg font-medium text-gray-800">Available Services</h3>
-
-        <div className="grid grid-cols-2 gap-4">
-          {services.map((service) => {
-            const IconComponent = getIconByName(service.icon);
-            return (
-              <div
-                key={service.id}
-                className="service-card"
-                onClick={() => handleServiceClick(service.id)}
-              >
-                <div className="w-10 h-10 rounded-full bg-akshaya-light flex items-center justify-center text-akshaya-primary">
-                  <IconComponent size={20} />
-                </div>
-                <h3 className="text-sm font-medium text-center">{service.name}</h3>
-              </div>
-            );
-          })}
+        
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search className="h-4 w-4 text-gray-400" />
+          </div>
+          <Input
+            type="text"
+            placeholder="Search services..."
+            className="pl-10"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
+
+        {filteredServices.length > 0 ? (
+          <div className="grid grid-cols-2 gap-4">
+            {filteredServices.map((service) => {
+              const IconComponent = getIconByName(service.icon);
+              return (
+                <div
+                  key={service.id}
+                  className="service-card"
+                  onClick={() => handleServiceClick(service.id)}
+                >
+                  <div className="w-10 h-10 rounded-full bg-akshaya-light flex items-center justify-center text-akshaya-primary">
+                    <IconComponent size={20} />
+                  </div>
+                  <h3 className="text-sm font-medium text-center">{service.name}</h3>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-6">
+            <p className="text-gray-500">No services found matching "{searchQuery}"</p>
+          </div>
+        )}
 
         <div className="bg-white rounded-lg p-4 shadow-sm mt-6">
           <h3 className="text-md font-medium text-gray-800 mb-2">About Akshaya E-Services</h3>
