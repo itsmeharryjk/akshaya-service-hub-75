@@ -88,7 +88,7 @@ const Home: React.FC = () => {
           </Button>
         </div>
 
-        <div className="bg-white rounded-lg p-4 shadow-sm mt-6">
+        <div className="bg-akshaya-light rounded-lg p-4 shadow-sm mt-6">
           <h3 className="text-md font-medium text-gray-800 mb-2">About Akshaya E-Services</h3>
           <p className="text-gray-600 text-sm">
             Akshaya E-Services is a government initiative to provide easy access to various
