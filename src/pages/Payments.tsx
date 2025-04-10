@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
@@ -90,6 +91,13 @@ const Payments: React.FC = () => {
           </TabsList>
 
           <TabsContent value="history">
+            <div className="bg-akshaya-light rounded-lg p-4 shadow-sm mb-4">
+              <h3 className="text-md font-medium text-gray-800 mb-1">Transaction History</h3>
+              <p className="text-sm text-gray-600">
+                View your payment history for all services. Track when and how much you paid for each government service.
+              </p>
+            </div>
+            
             <Card>
               <CardHeader>
                 <CardTitle>Transaction History</CardTitle>
@@ -168,6 +176,13 @@ const Payments: React.FC = () => {
           </TabsContent>
 
           <TabsContent value="methods">
+            <div className="bg-akshaya-light rounded-lg p-4 shadow-sm mb-4">
+              <h3 className="text-md font-medium text-gray-800 mb-1">Payment Methods</h3>
+              <p className="text-sm text-gray-600">
+                Manage your saved payment options for quick and easy transactions. Add UPI IDs or card details for secure payments.
+              </p>
+            </div>
+            
             <Card>
               <CardHeader>
                 <CardTitle>Your Payment Methods</CardTitle>
@@ -237,6 +252,13 @@ const Payments: React.FC = () => {
           </TabsContent>
 
           <TabsContent value="payment">
+            <div className="bg-akshaya-light rounded-lg p-4 shadow-sm mb-4">
+              <h3 className="text-md font-medium text-gray-800 mb-1">Make a Payment</h3>
+              <p className="text-sm text-gray-600">
+                Complete payments for government services quickly and securely. Use your saved payment methods or add a new one.
+              </p>
+            </div>
+            
             <Card>
               <CardHeader>
                 <CardTitle>Payment Details</CardTitle>
