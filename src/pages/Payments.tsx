@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
@@ -31,7 +32,7 @@ type PaymentMethod = {
 // Mock saved payment methods - in a real app, this would come from a secure API
 const mockSavedPaymentMethods: PaymentMethod[] = [
   { id: "pm1", type: "upi", value: "user@okaxis", isDefault: true },
-  { id: "pm2", type: "card", value: "**** **** **** 4242", issuer: "Visa", expiry: "12/28" },
+  { id: "pm2", type: "card", value: "**** **** **** 4242", issuer: "Visa", expiry: "12/28", isDefault: false },
 ];
 
 // Mock savings data
