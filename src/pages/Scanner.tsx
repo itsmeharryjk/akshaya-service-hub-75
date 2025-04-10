@@ -17,12 +17,21 @@ const Scanner: React.FC = () => {
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [fileName, setFileName] = useState("Scanned document");
+  const [documentName, setDocumentName] = useState("Document");
   
   // Get URL params
   const params = new URLSearchParams(location.search);
   const serviceId = params.get("serviceId");
   const docTypeId = params.get("docTypeId");
   const docTypeName = params.get("docTypeName") || "Document";
+  const isStandalone = params.get("standalone") === "true";
+
+  // Use docTypeName from URL or default to the state value
+  useState(() => {
+    if (docTypeName) {
+      setDocumentName(docTypeName);
+    }
+  });
 
   const startCamera = async () => {
     try {
@@ -96,17 +105,21 @@ const Scanner: React.FC = () => {
     }
   };
 
+  const handleDocumentNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDocumentName(e.target.value);
+  };
+
   const handleSaveDocument = () => {
-    if (!capturedImage || !serviceId || !docTypeId) {
-      alert("Missing required information");
+    if (!capturedImage) {
+      alert("No image captured");
       return;
     }
 
     const document = {
       id: Date.now().toString(),
-      serviceId,
-      documentTypeId: docTypeId,
-      documentTypeName: docTypeName,
+      serviceId: serviceId || "personal",
+      documentTypeId: docTypeId || "personal-doc",
+      documentTypeName: documentName,
       file: capturedImage,
       fileName: `${fileName}.pdf`,
       createdAt: new Date().toISOString()
@@ -114,7 +127,11 @@ const Scanner: React.FC = () => {
 
     try {
       saveDocument(document);
-      navigate(`/service/${serviceId}`);
+      if (serviceId) {
+        navigate(`/service/${serviceId}`);
+      } else {
+        navigate('/documents');
+      }
     } catch (error) {
       console.error("Error saving document:", error);
       alert("Failed to save document");
@@ -125,7 +142,7 @@ const Scanner: React.FC = () => {
     <Layout title="Document Scanner" showNav={false} showBack>
       <div className="flex flex-col h-full">
         <div className="p-4">
-          <h2 className="text-lg font-medium">Scan {docTypeName}</h2>
+          <h2 className="text-lg font-medium">Scan {isStandalone ? "Document" : docTypeName}</h2>
           <p className="text-sm text-gray-600 mb-4">
             Position your document within the frame and take a clear photo
           </p>
@@ -167,6 +184,23 @@ const Scanner: React.FC = () => {
             onChange={handleFileUpload} 
             style={{ display: 'none' }}
           />
+
+          {/* Document name input (only for standalone mode) */}
+          {isStandalone && capturedImage && (
+            <div className="w-full max-w-md mt-4">
+              <label htmlFor="document-name" className="block text-sm font-medium text-gray-700 mb-1">
+                Document Name
+              </label>
+              <input
+                id="document-name"
+                type="text"
+                value={documentName}
+                onChange={handleDocumentNameChange}
+                className="w-full p-2 border border-gray-300 rounded-md"
+                placeholder="Enter document name"
+              />
+            </div>
+          )}
 
           {/* Controls */}
           <div className="flex justify-around w-full mt-6">

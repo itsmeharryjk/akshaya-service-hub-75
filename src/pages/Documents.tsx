@@ -1,14 +1,17 @@
 
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
-import { deleteDocument, getServiceById, getStoredDocuments } from "@/lib/data-service";
+import { deleteDocument, getServiceById, getStoredDocuments, saveDocument } from "@/lib/data-service";
 import { ScannedDocument } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { Eye, Trash2, FileText, X } from "lucide-react";
+import { Eye, Trash2, FileText, X, Send, Plus, Camera } from "lucide-react";
+import { toast } from "sonner";
 
 const Documents: React.FC = () => {
   const [documents, setDocuments] = useState<ScannedDocument[]>([]);
   const [viewingDoc, setViewingDoc] = useState<ScannedDocument | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadDocuments();
@@ -37,9 +40,27 @@ const Documents: React.FC = () => {
     setViewingDoc(null);
   };
 
+  const handleScanDocument = () => {
+    navigate('/scanner?standalone=true');
+  };
+
+  const handleSendDocument = (doc: ScannedDocument) => {
+    // This would typically involve an API call to send the document to Akshaya
+    // For now, we'll just show a toast notification
+    toast.success(`Document ${doc.documentTypeName} sent to Akshaya successfully!`);
+  };
+
   return (
     <Layout title="My Documents" showBack={true}>
       <div className="p-4 space-y-4">
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg font-medium">My Documents</h2>
+          <Button onClick={handleScanDocument} className="bg-akshaya-primary">
+            <Camera size={16} className="mr-2" />
+            Scan New
+          </Button>
+        </div>
+
         {documents.length === 0 ? (
           <div className="text-center p-8">
             <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
@@ -49,52 +70,64 @@ const Documents: React.FC = () => {
             <p className="text-sm text-gray-500 mt-2">
               You haven't scanned or uploaded any documents yet.
             </p>
+            <Button 
+              variant="outline" 
+              className="mt-4" 
+              onClick={handleScanDocument}
+            >
+              <Plus size={16} className="mr-2" />
+              Scan Your First Document
+            </Button>
           </div>
         ) : (
-          <>
-            <h2 className="text-lg font-medium">My Documents</h2>
-            <div className="space-y-3">
-              {documents.map((doc) => {
-                const service = getServiceById(doc.serviceId);
-                
-                return (
-                  <div 
-                    key={doc.id} 
-                    className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="text-sm font-medium">{doc.documentTypeName}</div>
-                        <div className="text-xs text-gray-500">
-                          {service?.name || "Unknown Service"}
-                        </div>
-                        <div className="text-xs text-gray-400 mt-1">
-                          {new Date(doc.createdAt).toLocaleDateString()}
-                        </div>
+          <div className="space-y-3">
+            {documents.map((doc) => {
+              const service = getServiceById(doc.serviceId);
+              
+              return (
+                <div 
+                  key={doc.id} 
+                  className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <div className="text-sm font-medium">{doc.documentTypeName}</div>
+                      <div className="text-xs text-gray-500">
+                        {service?.name || "Personal Document"}
                       </div>
-                      
-                      <div className="flex space-x-2">
-                        <Button 
-                          variant="outline" 
-                          size="icon"
-                          onClick={() => handleViewDocument(doc)}
-                        >
-                          <Eye size={16} />
-                        </Button>
-                        <Button 
-                          variant="outline" 
-                          size="icon" 
-                          onClick={() => handleDeleteDocument(doc.id)}
-                        >
-                          <Trash2 size={16} />
-                        </Button>
+                      <div className="text-xs text-gray-400 mt-1">
+                        {new Date(doc.createdAt).toLocaleDateString()}
                       </div>
                     </div>
+                    
+                    <div className="flex space-x-2">
+                      <Button 
+                        variant="outline" 
+                        size="icon"
+                        onClick={() => handleViewDocument(doc)}
+                      >
+                        <Eye size={16} />
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        onClick={() => handleSendDocument(doc)}
+                      >
+                        <Send size={16} />
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        onClick={() => handleDeleteDocument(doc.id)}
+                      >
+                        <Trash2 size={16} />
+                      </Button>
+                    </div>
                   </div>
-                );
-              })}
-            </div>
-          </>
+                </div>
+              );
+            })}
+          </div>
         )}
       </div>
 
@@ -118,16 +151,28 @@ const Documents: React.FC = () => {
             <div className="p-4 border-t">
               <div className="flex justify-between">
                 <Button variant="outline" onClick={closeViewer}>Close</Button>
-                <Button 
-                  variant="destructive" 
-                  onClick={() => {
-                    handleDeleteDocument(viewingDoc.id);
-                    closeViewer();
-                  }}
-                >
-                  <Trash2 size={16} className="mr-2" />
-                  Delete
-                </Button>
+                <div className="space-x-2">
+                  <Button 
+                    variant="default" 
+                    onClick={() => {
+                      handleSendDocument(viewingDoc);
+                      closeViewer();
+                    }}
+                  >
+                    <Send size={16} className="mr-2" />
+                    Send to Akshaya
+                  </Button>
+                  <Button 
+                    variant="destructive" 
+                    onClick={() => {
+                      handleDeleteDocument(viewingDoc.id);
+                      closeViewer();
+                    }}
+                  >
+                    <Trash2 size={16} className="mr-2" />
+                    Delete
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
