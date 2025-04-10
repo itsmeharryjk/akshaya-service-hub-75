@@ -53,12 +53,11 @@ const Documents: React.FC = () => {
   return (
     <Layout title="My Documents" showBack={true}>
       <div className="p-4 space-y-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-medium">My Documents</h2>
-          <Button onClick={handleScanDocument} className="bg-akshaya-primary">
-            <Camera size={16} className="mr-2" />
-            Scan New
-          </Button>
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <p className="text-sm text-gray-600">
+            This is where all your scanned documents are stored. You can view, send to Akshaya services, or delete your documents. 
+            Use the scan button below to add new documents.
+          </p>
         </div>
 
         {documents.length === 0 ? (
@@ -129,6 +128,17 @@ const Documents: React.FC = () => {
             })}
           </div>
         )}
+      </div>
+
+      {/* Floating action button for scanning new documents */}
+      <div className="fixed bottom-20 inset-x-0 flex justify-center">
+        <Button 
+          onClick={handleScanDocument} 
+          className="bg-akshaya-primary h-14 w-14 rounded-full shadow-lg"
+          size="icon"
+        >
+          <Camera size={24} />
+        </Button>
       </div>
 
       {/* Document viewer modal */}
