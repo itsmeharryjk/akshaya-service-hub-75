@@ -53,8 +53,9 @@ const Documents: React.FC = () => {
   return (
     <Layout title="My Documents" showBack={true}>
       <div className="p-4 space-y-4">
-        <div className="bg-white rounded-lg p-4 shadow-sm">
-          <p className="text-sm text-gray-600">
+        <div className="bg-akshaya-light rounded-lg p-4 shadow-sm">
+          <h2 className="text-lg font-medium text-akshaya-primary mb-2">My Documents</h2>
+          <p className="text-gray-600 text-sm">
             This is where all your scanned documents are stored. You can view, send to Akshaya services, or delete your documents. 
             Use the scan button below to add new documents.
           </p>
