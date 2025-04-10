@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
+import { AuthProvider } from "./context/AuthContext";
 
 // Pages
 import Home from "./pages/Home";
@@ -14,6 +15,8 @@ import Documents from "./pages/Documents";
 import Payments from "./pages/Payments";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import Account from "./pages/Account";
 
 const queryClient = new QueryClient();
 
@@ -31,21 +34,25 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/service/:id" element={<ServiceDetails />} />
-            <Route path="/scanner" element={<Scanner />} />
-            <Route path="/documents" element={<Documents />} />
-            <Route path="/payment/:serviceId" element={<Payments />} />
-            <Route path="/payment-success" element={<PaymentSuccess />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/service/:id" element={<ServiceDetails />} />
+              <Route path="/scanner" element={<Scanner />} />
+              <Route path="/documents" element={<Documents />} />
+              <Route path="/payment/:serviceId" element={<Payments />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/account" element={<Account />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };

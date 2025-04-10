@@ -1,8 +1,9 @@
 
 import React from "react";
 import { Home, FileText, CreditCard, User } from "lucide-react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/context/AuthContext";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -22,12 +23,22 @@ const Layout: React.FC<LayoutProps> = ({
   className
 }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const isActive = (path: string) => {
     if (path === '/') {
       return location.pathname === path;
     }
     return location.pathname.startsWith(path);
+  };
+
+  const handleUserIconClick = () => {
+    if (isAuthenticated) {
+      navigate("/account");
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -49,7 +60,11 @@ const Layout: React.FC<LayoutProps> = ({
             <h1 className="text-lg font-medium">{title || "Akshaya E-Services"}</h1>
           </div>
           <div className="flex items-center">
-            <button className="p-1">
+            <button 
+              className="p-1"
+              onClick={handleUserIconClick}
+              aria-label="User account"
+            >
               <User size={20} />
             </button>
           </div>
