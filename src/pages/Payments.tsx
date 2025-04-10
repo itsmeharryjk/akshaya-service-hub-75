@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
@@ -19,8 +18,18 @@ const mockTransactions = [
   { id: "tx4", service: "Property Tax", amount: 500, date: "2025-03-10", status: "Completed" },
 ];
 
+// Define a proper type for the payment methods
+type PaymentMethod = {
+  id: string;
+  type: string;
+  value: string;
+  isDefault: boolean;
+  issuer?: string;
+  expiry?: string;
+};
+
 // Mock saved payment methods - in a real app, this would come from a secure API
-const mockSavedPaymentMethods = [
+const mockSavedPaymentMethods: PaymentMethod[] = [
   { id: "pm1", type: "upi", value: "user@okaxis", isDefault: true },
   { id: "pm2", type: "card", value: "**** **** **** 4242", issuer: "Visa", expiry: "12/28" },
 ];
@@ -40,7 +49,7 @@ const Payments: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState<'upi' | 'card'>('upi');
   const [upiId, setUpiId] = useState("");
   const [activeTab, setActiveTab] = useState("payment");
-  const [savedMethods, setSavedMethods] = useState(mockSavedPaymentMethods);
+  const [savedMethods, setSavedMethods] = useState<PaymentMethod[]>(mockSavedPaymentMethods);
 
   useEffect(() => {
     if (serviceId && serviceId !== 'quick') {

@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { AuthProvider } from "./context/AuthContext";
 
 // Pages
@@ -23,13 +23,25 @@ const queryClient = new QueryClient();
 const App = () => {
   // Mobile viewport height fix
   useEffect(() => {
-    const setVh = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    };
-    setVh();
-    window.addEventListener('resize', setVh);
-    return () => window.removeEventListener('resize', setVh);
+    // Only run this effect on the client side
+    if (typeof window !== 'undefined' && document) {
+      const setVh = () => {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      };
+      
+      setVh();
+      
+      // Add the event listener
+      window.addEventListener('resize', setVh);
+      
+      // Clean up
+      return () => {
+        if (window) {
+          window.removeEventListener('resize', setVh);
+        }
+      };
+    }
   }, []);
 
   return (
