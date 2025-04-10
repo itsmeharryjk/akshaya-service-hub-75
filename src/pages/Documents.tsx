@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
 import { deleteDocument, getServiceById, getStoredDocuments } from "@/lib/data-service";
@@ -37,7 +38,7 @@ const Documents: React.FC = () => {
   };
 
   return (
-    <Layout title="My Documents">
+    <Layout title="My Documents" showBack={true}>
       <div className="p-4 space-y-4">
         {documents.length === 0 ? (
           <div className="text-center p-8">

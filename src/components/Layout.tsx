@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Home, FileText, CreditCard, User } from "lucide-react";
+import { Home, FileText, CreditCard, User, ChevronLeft } from "lucide-react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
@@ -41,6 +41,14 @@ const Layout: React.FC<LayoutProps> = ({
     }
   };
 
+  const handleBackClick = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      window.history.back();
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Header */}
@@ -49,12 +57,11 @@ const Layout: React.FC<LayoutProps> = ({
           <div className="flex items-center space-x-2">
             {showBack && (
               <button 
-                onClick={onBack || (() => window.history.back())}
+                onClick={handleBackClick}
                 className="mr-2"
+                aria-label="Go back"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                </svg>
+                <ChevronLeft size={24} />
               </button>
             )}
             <h1 className="text-lg font-medium">{title || "Akshaya E-Services"}</h1>
