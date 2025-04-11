@@ -42,6 +42,20 @@ const App = () => {
         }
       };
     }
+    
+    // Add viewport meta tag for mobile
+    const updateViewportMeta = () => {
+      let viewportMeta = document.querySelector('meta[name="viewport"]');
+      if (!viewportMeta) {
+        viewportMeta = document.createElement('meta');
+        viewportMeta.name = 'viewport';
+        document.head.appendChild(viewportMeta);
+      }
+      viewportMeta.setAttribute('content', 
+        'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
+    };
+    
+    updateViewportMeta();
   }, []);
 
   return (

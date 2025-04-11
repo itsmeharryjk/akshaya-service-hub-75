@@ -1,6 +1,6 @@
 
-import React from "react";
-import { Home, FileText, CreditCard, User, ChevronLeft } from "lucide-react";
+import React, { useState } from "react";
+import { Home, FileText, CreditCard, User, ChevronLeft, Bell } from "lucide-react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
@@ -25,6 +25,7 @@ const Layout: React.FC<LayoutProps> = ({
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const [showNotifications, setShowNotifications] = useState(false);
 
   const isActive = (path: string) => {
     if (path === '/') {
@@ -49,6 +50,16 @@ const Layout: React.FC<LayoutProps> = ({
     }
   };
 
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
+
+  // Mock notifications for demonstration
+  const notifications = [
+    { id: 1, title: "Income Certificate", message: "Your application is pending verification.", time: "2h ago" },
+    { id: 2, title: "Govt. Alert", message: "New Aadhaar verification deadline extended.", time: "1d ago" },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Header */}
@@ -66,7 +77,45 @@ const Layout: React.FC<LayoutProps> = ({
             )}
             <h1 className="text-lg font-medium">{title || "Akshaya E-Services"}</h1>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center space-x-3">
+            <div className="relative">
+              <button 
+                className="p-1 relative"
+                onClick={toggleNotifications}
+                aria-label="Notifications"
+              >
+                <Bell size={20} />
+                {notifications.length > 0 && (
+                  <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                )}
+              </button>
+              
+              {/* Notification dropdown */}
+              {showNotifications && (
+                <div className="absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg overflow-hidden z-20">
+                  <div className="py-2">
+                    <div className="bg-akshaya-light p-3">
+                      <p className="text-sm text-gray-700">Stay updated with important alerts about your applications and government announcements</p>
+                    </div>
+                    {notifications.length > 0 ? (
+                      <>
+                        {notifications.map((notification) => (
+                          <div key={notification.id} className="px-4 py-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div className="flex justify-between">
+                              <p className="text-sm font-medium text-gray-900">{notification.title}</p>
+                              <p className="text-xs text-gray-500">{notification.time}</p>
+                            </div>
+                            <p className="text-sm text-gray-500 mt-1">{notification.message}</p>
+                          </div>
+                        ))}
+                      </>
+                    ) : (
+                      <div className="px-4 py-3 text-sm text-gray-500">No new notifications</div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
             <button 
               className="p-1"
               onClick={handleUserIconClick}
