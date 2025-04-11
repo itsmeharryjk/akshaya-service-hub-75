@@ -48,7 +48,7 @@ const App = () => {
       let viewportMeta = document.querySelector('meta[name="viewport"]');
       if (!viewportMeta) {
         viewportMeta = document.createElement('meta');
-        viewportMeta.name = 'viewport';
+        viewportMeta.setAttribute('name', 'viewport');
         document.head.appendChild(viewportMeta);
       }
       viewportMeta.setAttribute('content', 
