@@ -62,25 +62,24 @@ const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      {/* Header */}
-      <header className="sticky top-0 z-10 bg-akshaya-primary text-white p-4 shadow-md">
-        <div className="flex items-center justify-between">
+      <header className="sticky top-0 z-10 bg-akshaya-primary text-white p-4 shadow-md safe-top">
+        <div className="flex items-center justify-between max-w-screen-xl mx-auto">
           <div className="flex items-center space-x-2">
             {showBack && (
               <button 
                 onClick={handleBackClick}
-                className="mr-2"
+                className="mr-2 touch-target"
                 aria-label="Go back"
               >
                 <ChevronLeft size={24} />
               </button>
             )}
-            <h1 className="text-lg font-medium">{title || "Akshaya E-Services"}</h1>
+            <h1 className="text-lg font-medium truncate">{title || "Akshaya E-Services"}</h1>
           </div>
           <div className="flex items-center space-x-3">
             <div className="relative">
               <button 
-                className="p-1 relative"
+                className="p-2 relative touch-target"
                 onClick={toggleNotifications}
                 aria-label="Notifications"
               >
@@ -90,20 +89,27 @@ const Layout: React.FC<LayoutProps> = ({
                 )}
               </button>
               
-              {/* Notification dropdown */}
+              {/* Notification dropdown - Optimized for mobile */}
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg overflow-hidden z-20">
-                  <div className="py-2">
-                    <div className="bg-akshaya-light p-3">
-                      <p className="text-sm text-gray-700">Stay updated with important alerts about your applications and government announcements</p>
-                    </div>
+                <div className="absolute right-0 mt-2 w-[280px] sm:w-[320px] bg-white rounded-lg shadow-lg overflow-hidden z-20 border border-gray-100">
+                  {/* Explainer text in rectangle */}
+                  <div className="bg-akshaya-light p-4 border border-akshaya-primary/10 m-3 rounded">
+                    <p className="text-sm text-gray-700">
+                      Stay updated with important alerts about your applications and government announcements
+                    </p>
+                  </div>
+                  
+                  <div className="max-h-[60vh] overflow-y-auto overscroll-contain">
                     {notifications.length > 0 ? (
                       <>
                         {notifications.map((notification) => (
-                          <div key={notification.id} className="px-4 py-3 border-b border-gray-100 hover:bg-gray-50">
-                            <div className="flex justify-between">
+                          <div 
+                            key={notification.id} 
+                            className="px-4 py-3 border-b border-gray-100 hover:bg-gray-50 active:bg-gray-100 transition-colors touch-target"
+                          >
+                            <div className="flex justify-between items-start">
                               <p className="text-sm font-medium text-gray-900">{notification.title}</p>
-                              <p className="text-xs text-gray-500">{notification.time}</p>
+                              <p className="text-xs text-gray-500 ml-2">{notification.time}</p>
                             </div>
                             <p className="text-sm text-gray-500 mt-1">{notification.message}</p>
                           </div>
@@ -117,7 +123,7 @@ const Layout: React.FC<LayoutProps> = ({
               )}
             </div>
             <button 
-              className="p-1"
+              className="p-2 touch-target"
               onClick={handleUserIconClick}
               aria-label="User account"
             >
@@ -127,25 +133,34 @@ const Layout: React.FC<LayoutProps> = ({
         </div>
       </header>
 
-      {/* Main content */}
-      <main className={cn("flex-1", className)}>
+      {/* Main content - Optimized for mobile */}
+      <main className={cn("flex-1 -mt-px", className)}>
         <div className="page-container">
           {children}
         </div>
       </main>
 
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation - Mobile optimized */}
       {showNav && (
         <nav className="mobile-bottom-nav">
-          <Link to="/" className={`nav-item ${isActive('/') ? 'active' : ''}`}>
+          <Link 
+            to="/" 
+            className={`nav-item touch-target ${isActive('/') ? 'active' : ''}`}
+          >
             <Home size={20} />
             <span>Home</span>
           </Link>
-          <Link to="/documents" className={`nav-item ${isActive('/documents') ? 'active' : ''}`}>
+          <Link 
+            to="/documents" 
+            className={`nav-item touch-target ${isActive('/documents') ? 'active' : ''}`}
+          >
             <FileText size={20} />
             <span>Documents</span>
           </Link>
-          <Link to="/payment/quick" className={`nav-item ${isActive('/payment') ? 'active' : ''}`}>
+          <Link 
+            to="/payment/quick" 
+            className={`nav-item touch-target ${isActive('/payment') ? 'active' : ''}`}
+          >
             <CreditCard size={20} />
             <span>Payments</span>
           </Link>
