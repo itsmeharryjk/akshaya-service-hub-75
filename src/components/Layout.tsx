@@ -62,13 +62,14 @@ const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <header className="sticky top-0 z-10 bg-akshaya-primary text-white p-4 shadow-md safe-top">
-        <div className="flex items-center justify-between max-w-screen-xl mx-auto">
-          <div className="flex items-center space-x-2">
+      {/* Fixed Header */}
+      <header className="fixed top-0 left-0 right-0 z-20 bg-akshaya-primary text-white p-4 shadow-md safe-top">
+        <div className="flex items-center justify-between mx-auto">
+          <div className="flex items-center gap-3">
             {showBack && (
               <button 
                 onClick={handleBackClick}
-                className="mr-2 touch-target"
+                className="mr-1 touch-target"
                 aria-label="Go back"
               >
                 <ChevronLeft size={24} />
@@ -76,22 +77,22 @@ const Layout: React.FC<LayoutProps> = ({
             )}
             <h1 className="text-lg font-medium truncate">{title || "Akshaya E-Services"}</h1>
           </div>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-4">
             <div className="relative">
               <button 
-                className="p-2 relative touch-target"
+                className="touch-target relative flex items-center justify-center"
                 onClick={toggleNotifications}
                 aria-label="Notifications"
               >
-                <Bell size={20} />
+                <Bell size={22} />
                 {notifications.length > 0 && (
                   <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
                 )}
               </button>
               
-              {/* Notification dropdown - Optimized for mobile */}
+              {/* Notification dropdown */}
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-[280px] sm:w-[320px] bg-white rounded-lg shadow-lg overflow-hidden z-20 border border-gray-100">
+                <div className="absolute right-0 mt-2 w-[280px] sm:w-[320px] bg-white rounded-lg shadow-lg overflow-hidden z-30 border border-gray-100">
                   {/* Explainer text in rectangle */}
                   <div className="bg-akshaya-light p-4 border border-akshaya-primary/10 m-3 rounded">
                     <p className="text-sm text-gray-700">
@@ -123,47 +124,49 @@ const Layout: React.FC<LayoutProps> = ({
               )}
             </div>
             <button 
-              className="p-2 touch-target"
+              className="touch-target flex items-center justify-center"
               onClick={handleUserIconClick}
               aria-label="User account"
             >
-              <User size={20} />
+              <User size={22} />
             </button>
           </div>
         </div>
       </header>
 
-      {/* Main content - Optimized for mobile */}
-      <main className={cn("flex-1 -mt-px", className)}>
-        <div className="page-container">
+      {/* Main content with proper spacing */}
+      <main className={cn("flex-1 pt-16 pb-16", className)}>
+        <div className="page-container pt-2">
           {children}
         </div>
       </main>
 
-      {/* Bottom Navigation - Mobile optimized */}
+      {/* Fixed Bottom Navigation */}
       {showNav && (
-        <nav className="mobile-bottom-nav">
-          <Link 
-            to="/" 
-            className={`nav-item touch-target ${isActive('/') ? 'active' : ''}`}
-          >
-            <Home size={20} />
-            <span>Home</span>
-          </Link>
-          <Link 
-            to="/documents" 
-            className={`nav-item touch-target ${isActive('/documents') ? 'active' : ''}`}
-          >
-            <FileText size={20} />
-            <span>Documents</span>
-          </Link>
-          <Link 
-            to="/payment/quick" 
-            className={`nav-item touch-target ${isActive('/payment') ? 'active' : ''}`}
-          >
-            <CreditCard size={20} />
-            <span>Payments</span>
-          </Link>
+        <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-20 safe-bottom">
+          <div className="flex justify-around items-center max-w-lg mx-auto">
+            <Link 
+              to="/" 
+              className={`nav-item touch-target py-2 ${isActive('/') ? 'active' : ''}`}
+            >
+              <Home size={22} />
+              <span className="text-xs mt-1">Home</span>
+            </Link>
+            <Link 
+              to="/documents" 
+              className={`nav-item touch-target py-2 ${isActive('/documents') ? 'active' : ''}`}
+            >
+              <FileText size={22} />
+              <span className="text-xs mt-1">Documents</span>
+            </Link>
+            <Link 
+              to="/payment/quick" 
+              className={`nav-item touch-target py-2 ${isActive('/payment') ? 'active' : ''}`}
+            >
+              <CreditCard size={22} />
+              <span className="text-xs mt-1">Payments</span>
+            </Link>
+          </div>
         </nav>
       )}
     </div>

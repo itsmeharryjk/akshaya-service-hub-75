@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -98,7 +99,7 @@
   }
 
   .nav-item {
-    @apply flex flex-col items-center justify-center text-xs text-gray-500 pt-1 pb-1 w-full;
+    @apply flex flex-col items-center justify-center text-xs text-gray-500 w-full;
   }
 
   .nav-item.active {
@@ -107,16 +108,16 @@
   
   /* Add safe area insets for mobile devices */
   .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom, 0.5rem);
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
   }
 
   .safe-top {
-    padding-top: env(safe-area-inset-top, 0.5rem);
+    padding-top: max(0.5rem, env(safe-area-inset-top));
   }
   
   /* Improve touch targets for mobile */
   .touch-target {
-    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+    @apply min-h-[48px] min-w-[48px] flex items-center justify-center;
   }
 
   /* Prevent content from being hidden under the notch */
