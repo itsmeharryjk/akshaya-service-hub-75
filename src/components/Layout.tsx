@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Home, FileText, CreditCard, User, ChevronLeft, Bell } from "lucide-react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -26,6 +26,7 @@ const Layout: React.FC<LayoutProps> = ({
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [showNotifications, setShowNotifications] = useState(false);
+  const notificationRef = useRef<HTMLDivElement>(null);
 
   const isActive = (path: string) => {
     if (path === '/') {
@@ -53,6 +54,23 @@ const Layout: React.FC<LayoutProps> = ({
   const toggleNotifications = () => {
     setShowNotifications(!showNotifications);
   };
+
+  // Close notifications when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+        setShowNotifications(false);
+      }
+    };
+
+    if (showNotifications) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showNotifications]);
 
   // Mock notifications for demonstration
   const notifications = [
@@ -92,9 +110,9 @@ const Layout: React.FC<LayoutProps> = ({
               
               {/* Notification dropdown */}
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg overflow-hidden z-20">
+                <div ref={notificationRef} className="absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg overflow-hidden z-20">
                   <div className="py-2">
-                    <div className="bg-akshaya-light p-3">
+                    <div className="bg-akshaya-light p-3 rounded-lg mx-3 my-2">
                       <p className="text-sm text-gray-700">Stay updated with important alerts about your applications and government announcements</p>
                     </div>
                     {notifications.length > 0 ? (
