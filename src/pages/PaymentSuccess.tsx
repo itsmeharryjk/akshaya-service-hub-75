@@ -1,9 +1,9 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Download, Home } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 
 const PaymentSuccess: React.FC = () => {
   const navigate = useNavigate();
@@ -13,56 +13,54 @@ const PaymentSuccess: React.FC = () => {
 
   return (
     <Layout title="Payment Successful" showNav={false} showBack={false}>
-      <div className="flex flex-col items-center justify-center h-full p-4 text-center">
-        <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-6">
+      <div className="flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-4">
           <CheckCircle size={40} className="text-green-600" />
         </div>
         
-        <h2 className="text-xl font-bold text-green-600 mb-2">Payment Successful!</h2>
-        <p className="text-low-contrast mb-6">
+        <h2 className="text-xl font-bold text-green-600">Payment Successful!</h2>
+        <p className="text-gray-600 mt-2">
           Your transaction has been completed successfully.
         </p>
         
-        <div className="w-full bg-surface rounded-lg shadow-sm p-5 mb-6">
+        <div className="w-full max-w-xs mt-6 bg-white rounded-lg shadow-sm p-4">
           <div className="space-y-3">
-            <div className="flex justify-between py-1 border-b border-gray-100">
-              <span className="text-low-contrast">Transaction ID</span>
-              <span className="font-medium text-high-contrast">{transactionId}</span>
+            <div className="flex justify-between">
+              <span className="text-gray-500 text-sm">Transaction ID</span>
+              <span className="font-medium text-sm">{transactionId}</span>
             </div>
-            <div className="flex justify-between py-1 border-b border-gray-100">
-              <span className="text-low-contrast">Date</span>
-              <span className="font-medium text-high-contrast">{date}</span>
+            <div className="flex justify-between">
+              <span className="text-gray-500 text-sm">Date</span>
+              <span className="font-medium text-sm">{date}</span>
             </div>
-            <div className="flex justify-between py-1">
-              <span className="text-low-contrast">Time</span>
-              <span className="font-medium text-high-contrast">{time}</span>
+            <div className="flex justify-between">
+              <span className="text-gray-500 text-sm">Time</span>
+              <span className="font-medium text-sm">{time}</span>
             </div>
           </div>
         </div>
         
-        <div className="space-y-3 w-full">
+        <div className="mt-6 space-y-4 w-full max-w-xs">
           <Button 
             variant="outline" 
-            className="w-full icon-text-pair justify-center"
+            className="w-full"
             onClick={() => { 
-              // Print or download receipt logic
+              // Print or download receipt logic would go here
               window.print();
             }}
           >
-            <Download size={24} />
-            <span>Download Receipt</span>
+            Download Receipt
           </Button>
           
           <Button 
-            className="w-full icon-text-pair justify-center"
+            className="w-full"
             onClick={() => navigate("/")}
           >
-            <Home size={24} />
-            <span>Back to Home</span>
+            Back to Home
           </Button>
         </div>
         
-        <p className="text-sm text-low-contrast mt-6">
+        <p className="text-sm text-gray-500 mt-6">
           A confirmation has been sent to your registered email and mobile number.
         </p>
       </div>

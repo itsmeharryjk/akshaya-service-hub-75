@@ -23,8 +23,28 @@ const queryClient = new QueryClient();
 const App = () => {
   // Mobile viewport height fix
   useEffect(() => {
-    // Set proper viewport meta tag
-    const setViewportMeta = () => {
+    // Only run this effect on the client side
+    if (typeof window !== 'undefined' && document) {
+      const setVh = () => {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      };
+      
+      setVh();
+      
+      // Add the event listener
+      window.addEventListener('resize', setVh);
+      
+      // Clean up
+      return () => {
+        if (window) {
+          window.removeEventListener('resize', setVh);
+        }
+      };
+    }
+    
+    // Add viewport meta tag for mobile
+    const updateViewportMeta = () => {
       let viewportMeta = document.querySelector('meta[name="viewport"]');
       if (!viewportMeta) {
         viewportMeta = document.createElement('meta');
@@ -35,20 +55,7 @@ const App = () => {
         'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
     };
     
-    // Fix for mobile 100vh issue
-    const setVh = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    };
-    
-    setViewportMeta();
-    setVh();
-    
-    window.addEventListener('resize', setVh);
-    
-    return () => {
-      window.removeEventListener('resize', setVh);
-    };
+    updateViewportMeta();
   }, []);
 
   return (
