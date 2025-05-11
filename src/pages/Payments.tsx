@@ -86,7 +86,7 @@ const Payments: React.FC = () => {
         <Tabs defaultValue="history" value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="history">History</TabsTrigger>
-            <TabsTrigger value="methods">Payment Methods</TabsTrigger>
+            <TabsTrigger value="methods">Methods</TabsTrigger>
             <TabsTrigger value="payment">Pay Now</TabsTrigger>
           </TabsList>
 
