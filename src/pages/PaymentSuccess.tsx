@@ -19,23 +19,23 @@ const PaymentSuccess: React.FC = () => {
         </div>
         
         <h2 className="text-xl font-bold text-green-600 mb-2">Payment Successful!</h2>
-        <p className="text-gray-600 mb-6">
+        <p className="text-low-contrast mb-6">
           Your transaction has been completed successfully.
         </p>
         
-        <div className="w-full bg-white rounded-lg shadow-sm p-5 mb-6">
+        <div className="w-full bg-surface rounded-lg shadow-sm p-5 mb-6">
           <div className="space-y-3">
             <div className="flex justify-between py-1 border-b border-gray-100">
-              <span className="text-gray-500">Transaction ID</span>
-              <span className="font-medium">{transactionId}</span>
+              <span className="text-low-contrast">Transaction ID</span>
+              <span className="font-medium text-high-contrast">{transactionId}</span>
             </div>
             <div className="flex justify-between py-1 border-b border-gray-100">
-              <span className="text-gray-500">Date</span>
-              <span className="font-medium">{date}</span>
+              <span className="text-low-contrast">Date</span>
+              <span className="font-medium text-high-contrast">{date}</span>
             </div>
             <div className="flex justify-between py-1">
-              <span className="text-gray-500">Time</span>
-              <span className="font-medium">{time}</span>
+              <span className="text-low-contrast">Time</span>
+              <span className="font-medium text-high-contrast">{time}</span>
             </div>
           </div>
         </div>
@@ -43,26 +43,26 @@ const PaymentSuccess: React.FC = () => {
         <div className="space-y-3 w-full">
           <Button 
             variant="outline" 
-            className="w-full gap-2"
+            className="w-full icon-text-pair justify-center"
             onClick={() => { 
               // Print or download receipt logic
               window.print();
             }}
           >
-            <Download size={18} />
-            Download Receipt
+            <Download size={24} />
+            <span>Download Receipt</span>
           </Button>
           
           <Button 
-            className="w-full gap-2"
+            className="w-full icon-text-pair justify-center"
             onClick={() => navigate("/")}
           >
-            <Home size={18} />
-            Back to Home
+            <Home size={24} />
+            <span>Back to Home</span>
           </Button>
         </div>
         
-        <p className="text-sm text-gray-500 mt-6">
+        <p className="text-sm text-low-contrast mt-6">
           A confirmation has been sent to your registered email and mobile number.
         </p>
       </div>

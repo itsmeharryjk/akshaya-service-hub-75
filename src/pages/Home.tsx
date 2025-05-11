@@ -29,9 +29,9 @@ const Home: React.FC = () => {
     <Layout title="Akshaya E-Services">
       <div className="space-y-5">
         {/* Welcome Card */}
-        <div className="bg-akshaya-light rounded-lg p-4 shadow-sm">
-          <h2 className="text-lg font-medium text-akshaya-primary mb-2">Welcome to Akshaya E-Services</h2>
-          <p className="text-gray-600 text-sm">
+        <div className="bg-secondary rounded-lg p-4 shadow-sm">
+          <h2 className="text-lg font-semibold text-primary mb-2">Welcome to Akshaya E-Services</h2>
+          <p className="text-low-contrast">
             Access government services easily from your mobile device.
             Apply for certificates, documents, and more.
           </p>
@@ -39,10 +39,10 @@ const Home: React.FC = () => {
 
         {/* Search Box */}
         <div>
-          <h3 className="text-lg font-medium text-gray-800 mb-3">Available Services</h3>
+          <h3 className="text-lg font-semibold text-high-contrast mb-3">Available Services</h3>
           <div className="relative mb-4">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search className="h-4 w-4 text-gray-400" />
+              <Search className="h-4 w-4 text-low-contrast" />
             </div>
             <Input
               type="text"
@@ -65,8 +65,8 @@ const Home: React.FC = () => {
                   className="service-card"
                   onClick={() => handleServiceClick(service.id)}
                 >
-                  <div className="w-12 h-12 rounded-full bg-akshaya-light flex items-center justify-center text-akshaya-primary mb-2">
-                    <IconComponent size={22} />
+                  <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-primary mb-2">
+                    <IconComponent size={24} />
                   </div>
                   <h3 className="text-sm font-medium text-center">{service.name}</h3>
                 </div>
@@ -74,28 +74,28 @@ const Home: React.FC = () => {
             })}
           </div>
         ) : (
-          <div className="text-center py-6 bg-white rounded-lg shadow-sm">
-            <p className="text-gray-500">No services found matching "{searchQuery}"</p>
+          <div className="text-center py-6 bg-surface rounded-lg shadow-sm">
+            <p className="text-low-contrast">No services found matching "{searchQuery}"</p>
           </div>
         )}
 
         {/* Call Akshaya section */}
-        <div className="bg-white rounded-lg p-5 shadow-sm flex flex-col items-center mt-4">
-          <p className="text-sm text-gray-600 mb-3">Can't find what you're looking for?</p>
+        <div className="bg-surface rounded-lg p-5 shadow-sm flex flex-col items-center">
+          <p className="text-sm text-low-contrast mb-3">Can't find what you're looking for?</p>
           <Button 
             variant="outline" 
-            className="flex items-center gap-2 border-akshaya-primary text-akshaya-primary hover:bg-akshaya-light w-full justify-center"
+            className="flex items-center gap-2 border-primary text-primary hover:bg-secondary w-full justify-center"
             onClick={handleCallAkshaya}
           >
-            <Phone size={18} />
-            Call Akshaya Support
+            <Phone size={24} />
+            <span>Call Akshaya Support</span>
           </Button>
         </div>
 
         {/* About section */}
-        <div className="bg-akshaya-light rounded-lg p-4 shadow-sm mb-4">
-          <h3 className="text-md font-medium text-gray-800 mb-2">About Akshaya E-Services</h3>
-          <p className="text-gray-600 text-sm">
+        <div className="bg-secondary rounded-lg p-4 shadow-sm mb-4">
+          <h3 className="text-md font-semibold text-high-contrast mb-2">About Akshaya E-Services</h3>
+          <p className="text-low-contrast">
             Akshaya E-Services is a government initiative to provide easy access to various
             services through mobile devices. Apply for documents, certificates, and make payments
             from the comfort of your home.

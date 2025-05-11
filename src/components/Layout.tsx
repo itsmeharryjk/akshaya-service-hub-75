@@ -1,9 +1,10 @@
 
 import React, { useState } from "react";
-import { Home, FileText, CreditCard, User, ChevronLeft, Bell } from "lucide-react";
+import { Home, FileText, CreditCard, User, ChevronLeft, Bell, Menu } from "lucide-react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
+import { Button } from "@/components/ui/button";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -26,6 +27,7 @@ const Layout: React.FC<LayoutProps> = ({
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const isActive = (path: string) => {
     if (path === '/') {
@@ -52,6 +54,12 @@ const Layout: React.FC<LayoutProps> = ({
 
   const toggleNotifications = () => {
     setShowNotifications(!showNotifications);
+    if (showMenu) setShowMenu(false);
+  };
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+    if (showNotifications) setShowNotifications(false);
   };
 
   // Mock notifications for demonstration
@@ -61,15 +69,15 @@ const Layout: React.FC<LayoutProps> = ({
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-surface-alt">
       {/* Fixed Header */}
-      <header className="fixed top-0 left-0 right-0 z-20 bg-akshaya-primary text-white p-4 shadow-md safe-top">
-        <div className="flex items-center justify-between mx-auto">
+      <header className="fixed top-0 left-0 right-0 z-20 bg-primary text-primary-foreground shadow-md safe-top">
+        <div className="flex items-center justify-between h-14 px-4">
           <div className="flex items-center gap-3">
             {showBack && (
               <button 
                 onClick={handleBackClick}
-                className="mr-1 touch-target"
+                className="touch-target"
                 aria-label="Go back"
               >
                 <ChevronLeft size={24} />
@@ -77,24 +85,24 @@ const Layout: React.FC<LayoutProps> = ({
             )}
             <h1 className="text-lg font-medium truncate">{title || "Akshaya E-Services"}</h1>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <div className="relative">
               <button 
                 className="touch-target relative flex items-center justify-center"
                 onClick={toggleNotifications}
                 aria-label="Notifications"
               >
-                <Bell size={22} />
+                <Bell size={24} />
                 {notifications.length > 0 && (
-                  <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                  <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
                 )}
               </button>
               
               {/* Notification dropdown */}
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-[280px] sm:w-[320px] bg-white rounded-lg shadow-lg overflow-hidden z-30 border border-gray-100">
+                <div className="absolute right-0 mt-2 w-screen max-w-sm bg-surface rounded-lg shadow-lg overflow-hidden z-30 border border-gray-100 -right-4">
                   {/* Explainer text in rectangle */}
-                  <div className="bg-akshaya-light p-4 border border-akshaya-primary/10 m-3 rounded">
+                  <div className="notification-explainer">
                     <p className="text-sm text-gray-700">
                       Stay updated with important alerts about your applications and government announcements
                     </p>
@@ -109,15 +117,15 @@ const Layout: React.FC<LayoutProps> = ({
                             className="px-4 py-3 border-b border-gray-100 hover:bg-gray-50 active:bg-gray-100 transition-colors touch-target"
                           >
                             <div className="flex justify-between items-start">
-                              <p className="text-sm font-medium text-gray-900">{notification.title}</p>
-                              <p className="text-xs text-gray-500 ml-2">{notification.time}</p>
+                              <p className="text-sm font-medium text-high-contrast">{notification.title}</p>
+                              <p className="text-xs text-low-contrast ml-2">{notification.time}</p>
                             </div>
-                            <p className="text-sm text-gray-500 mt-1">{notification.message}</p>
+                            <p className="text-sm text-low-contrast mt-1">{notification.message}</p>
                           </div>
                         ))}
                       </>
                     ) : (
-                      <div className="px-4 py-3 text-sm text-gray-500">No new notifications</div>
+                      <div className="px-4 py-3 text-sm text-low-contrast">No new notifications</div>
                     )}
                   </div>
                 </div>
@@ -128,7 +136,7 @@ const Layout: React.FC<LayoutProps> = ({
               onClick={handleUserIconClick}
               aria-label="User account"
             >
-              <User size={22} />
+              <User size={24} />
             </button>
           </div>
         </div>
@@ -143,28 +151,28 @@ const Layout: React.FC<LayoutProps> = ({
 
       {/* Fixed Bottom Navigation */}
       {showNav && (
-        <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-20 safe-bottom">
-          <div className="flex justify-around items-center max-w-lg mx-auto">
+        <nav className="mobile-bottom-nav">
+          <div className="flex justify-around items-center w-full max-w-lg mx-auto">
             <Link 
               to="/" 
-              className={`nav-item touch-target py-2 ${isActive('/') ? 'active' : ''}`}
+              className={`nav-item ${isActive('/') ? 'active' : ''}`}
             >
-              <Home size={22} />
-              <span className="text-xs mt-1">Home</span>
+              <Home size={24} />
+              <span className="text-xs">Home</span>
             </Link>
             <Link 
               to="/documents" 
-              className={`nav-item touch-target py-2 ${isActive('/documents') ? 'active' : ''}`}
+              className={`nav-item ${isActive('/documents') ? 'active' : ''}`}
             >
-              <FileText size={22} />
-              <span className="text-xs mt-1">Documents</span>
+              <FileText size={24} />
+              <span className="text-xs">Documents</span>
             </Link>
             <Link 
               to="/payment/quick" 
-              className={`nav-item touch-target py-2 ${isActive('/payment') ? 'active' : ''}`}
+              className={`nav-item ${isActive('/payment') ? 'active' : ''}`}
             >
-              <CreditCard size={22} />
-              <span className="text-xs mt-1">Payments</span>
+              <CreditCard size={24} />
+              <span className="text-xs">Payments</span>
             </Link>
           </div>
         </nav>
