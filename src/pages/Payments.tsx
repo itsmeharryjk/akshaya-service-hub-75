@@ -199,9 +199,10 @@ const Payments: React.FC = () => {
                       <CreditCard className="text-gray-400" size={24} />
                     </div>
                     <h3 className="text-base font-medium">{t('noPaymentMethods')}</h3>
-                <h3 className="text-sm font-medium mb-2">{t('selectPaymentMethod')}</h3>
+                    <p className="text-sm text-gray-500">{t('addPaymentMethodDescription')}</p>
                   </div>
                 ) : (
+                  <div>
                     <h4 className="text-xs text-gray-500">{t('savedMethods')}</h4>
                     {savedMethods.map(method => (
                       <div key={method.id} className="flex justify-between items-center border rounded-lg p-3">
@@ -263,7 +264,7 @@ const Payments: React.FC = () => {
             
             <Card>
               <CardHeader>
-              <CardTitle>{t('payNow')}</CardTitle>
+                <CardTitle>{t('payNow')}</CardTitle>
                 <CardDescription>
                   {service ? `Complete payment for ${service.name}` : "Make a quick payment"}
                 </CardDescription>
@@ -292,40 +293,9 @@ const Payments: React.FC = () => {
                 )}
 
                 <div className="mt-4">
-                  <label className="text-sm font-medium">{t('upiId')}</label>
-                  {savedMethods.length > 0 && (
-                    <div className="mb-4 space-y-2">
-                      <h4 className="text-xs text-gray-500">Saved Methods</h4>
-                      {savedMethods.map(method => (
-                        <div 
-                          key={method.id}
-                          className={`border rounded-lg p-3 flex justify-between items-center cursor-pointer ${method.isDefault ? 'border-akshaya-primary bg-akshaya-light' : 'border-gray-200'}`}
-                          onClick={() => handleSetDefault(method.id)}
-                        >
-                          <div className="flex items-center">
-                            {method.type === 'upi' ? (
-                              <Smartphone size={20} className="mr-2 text-akshaya-primary" />
-                            ) : (
-                              <CreditCard size={20} className="mr-2 text-akshaya-primary" />
-                            )}
-                            <div>
-                              <span className="text-sm font-medium">{method.value}</span>
-                              {method.type === 'card' && (
-                                <p className="text-xs text-gray-500">{method.issuer} • Expires {method.expiry}</p>
-                              )}
-                            </div>
-                          </div>
-                          <div className="flex items-center">
-                            {method.isDefault && (
-                              <span className="text-xs text-akshaya-primary mr-2">Default</span>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                  <h3 className="text-sm font-medium mb-2">{t('selectPaymentMethod')}</h3>
                   
-                  <div className="grid grid-cols-2 gap-3 mt-3">
+                  <div className="grid grid-cols-2 gap-3">
                     <div 
                       className={`border rounded-lg p-3 flex flex-col items-center cursor-pointer relative ${paymentMethod === 'upi' ? 'border-akshaya-primary bg-akshaya-light' : 'border-gray-200'}`}
                       onClick={() => setPaymentMethod('upi')}
@@ -334,22 +304,22 @@ const Payments: React.FC = () => {
                       <span className="mt-1 text-sm">{t('upiGooglePay')}</span>
                       {paymentMethod === 'upi' && (
                         <div className="absolute top-1 right-1 bg-akshaya-primary rounded-full p-0.5">
-                    <label className="text-sm font-medium">{t('cardNumber')}</label>
+                          <Check size={12} className="text-white" />
                         </div>
                       )}
                     </div>
                     <div 
-                      <label className="text-sm font-medium">{t('expiryDate')}</label>
+                      className={`border rounded-lg p-3 flex flex-col items-center cursor-pointer relative ${paymentMethod === 'card' ? 'border-akshaya-primary bg-akshaya-light' : 'border-gray-200'}`}
                       onClick={() => setPaymentMethod('card')}
                     >
                       <CreditCard size={24} className={paymentMethod === 'card' ? 'text-akshaya-primary' : 'text-gray-400'} />
-                      <label className="text-sm font-medium">{t('cvv')}</label>
+                      <span className="mt-1 text-sm">{t('creditDebitCard')}</span>
                       {paymentMethod === 'card' && (
-                  <h3 className="text-sm font-medium">{t('service')}:</h3>
+                        <div className="absolute top-1 right-1 bg-akshaya-primary rounded-full p-0.5">
                           <Check size={12} className="text-white" />
                         </div>
-                    <label className="text-sm font-medium">{t('nameOnCard')}</label>
-                    <Input placeholder={t('nameOnCard')} />
+                      )}
+                    </div>
                   </div>
                 </div>
 
