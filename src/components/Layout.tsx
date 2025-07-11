@@ -81,6 +81,10 @@ const Layout: React.FC<LayoutProps> = ({
     { id: 2, title: "Govt. Alert", message: "New Aadhaar verification deadline extended.", time: "1d ago" },
   ];
 
+  const handleNotificationClick = () => {
+    navigate("/notifications");
+    setShowNotifications(false);
+  };
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Header */}
@@ -128,7 +132,11 @@ const Layout: React.FC<LayoutProps> = ({
                       {notifications.length > 0 ? (
                         <>
                           {notifications.map((notification) => (
-                            <div key={notification.id} className="px-4 py-3 border-b border-gray-100 hover:bg-gray-50">
+                            <div 
+                              key={notification.id} 
+                              className="px-4 py-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
+                              onClick={handleNotificationClick}
+                            >
                               <div className="flex justify-between">
                                 <p className="text-sm font-medium text-gray-900">{notification.title}</p>
                                 <p className="text-xs text-gray-500">{notification.time}</p>
@@ -136,6 +144,14 @@ const Layout: React.FC<LayoutProps> = ({
                               <p className="text-sm text-gray-500 mt-1">{notification.message}</p>
                             </div>
                           ))}
+                          <div className="px-4 py-3">
+                            <button 
+                              onClick={handleNotificationClick}
+                              className="w-full text-center text-sm text-akshaya-primary hover:underline"
+                            >
+                              {t('viewAllNotifications')}
+                            </button>
+                          </div>
                         </>
                       ) : (
                         <div className="px-4 py-3 text-sm text-gray-500">{t('noNotifications')}</div>
