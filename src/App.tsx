@@ -14,6 +14,7 @@ import Scanner from "./pages/Scanner";
 import Documents from "./pages/Documents";
 import Payments from "./pages/Payments";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import ProcessedDocuments from "./pages/ProcessedDocuments";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Account from "./pages/Account";
@@ -72,6 +73,7 @@ const App = () => {
               <Route path="/documents" element={<Documents />} />
               <Route path="/payment/:serviceId" element={<Payments />} />
               <Route path="/payment-success" element={<PaymentSuccess />} />
+              <Route path="/processed-documents" element={<ProcessedDocuments />} />
               <Route path="/login" element={<Login />} />
               <Route path="/account" element={<Account />} />
               <Route path="*" element={<NotFound />} />
