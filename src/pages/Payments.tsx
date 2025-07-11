@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,6 +42,7 @@ const mockSavings = {
 const Payments: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [service, setService] = useState<Service | null>(null);
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'upi' | 'card'>('upi');
@@ -81,34 +83,34 @@ const Payments: React.FC = () => {
   };
 
   return (
-    <Layout title="Payments" showBack>
+    <Layout title={t('payments')} showBack>
       <div className="p-4">
         <Tabs defaultValue="history" value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="history">History</TabsTrigger>
-            <TabsTrigger value="methods">Methods</TabsTrigger>
-            <TabsTrigger value="payment">Pay Now</TabsTrigger>
+            <TabsTrigger value="history">{t('paymentHistory')}</TabsTrigger>
+            <TabsTrigger value="methods">{t('paymentMethods')}</TabsTrigger>
+            <TabsTrigger value="payment">{t('payNow')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="history">
             <div className="bg-akshaya-light rounded-lg p-4 shadow-sm mb-4">
-              <h3 className="text-md font-medium text-gray-800 mb-1">Transaction History</h3>
+              <h3 className="text-md font-medium text-gray-800 mb-1">{t('transactionHistory')}</h3>
               <p className="text-sm text-gray-600">
-                View your payment history for all services. Track when and how much you paid for each government service.
+                {t('paymentHistoryDescription')}
               </p>
             </div>
             
             <Card>
               <CardHeader>
-                <CardTitle>Transaction History</CardTitle>
+                <CardTitle>{t('transactionHistory')}</CardTitle>
                 <CardDescription>
-                  View your payment history and status
+                  {t('paymentHistoryDescription')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 {mockTransactions.length === 0 ? (
                   <div className="text-center py-8">
-                    <p className="text-gray-500">No transactions yet</p>
+                    <p className="text-gray-500">{t('noTransactions')}</p>
                   </div>
                 ) : (
                   <>
@@ -136,7 +138,7 @@ const Payments: React.FC = () => {
             </Card>
             
             <div className="mt-6">
-              <h3 className="text-lg font-medium mb-3">Your Savings with Akshaya</h3>
+              <h3 className="text-lg font-medium mb-3">{t('yourSavings')}</h3>
               <div className="grid grid-cols-3 gap-3">
                 <Card className="bg-blue-50">
                   <CardContent className="pt-6">
@@ -145,7 +147,7 @@ const Payments: React.FC = () => {
                         <Clock size={20} className="text-blue-600" />
                       </div>
                       <p className="text-2xl font-bold text-blue-600">{mockSavings.timeSaved}h</p>
-                      <p className="text-sm text-gray-600">Time Saved</p>
+                      <p className="text-sm text-gray-600">{t('timeSaved')}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -156,7 +158,7 @@ const Payments: React.FC = () => {
                         <IndianRupee size={20} className="text-green-600" />
                       </div>
                       <p className="text-2xl font-bold text-green-600">₹{mockSavings.moneySaved}</p>
-                      <p className="text-sm text-gray-600">Money Saved</p>
+                      <p className="text-sm text-gray-600">{t('moneySaved')}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -167,7 +169,7 @@ const Payments: React.FC = () => {
                         <Check size={20} className="text-purple-600" />
                       </div>
                       <p className="text-2xl font-bold text-purple-600">{mockSavings.visitsSaved}</p>
-                      <p className="text-sm text-gray-600">Visits Avoided</p>
+                      <p className="text-sm text-gray-600">{t('visitsAvoided')}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -177,17 +179,17 @@ const Payments: React.FC = () => {
 
           <TabsContent value="methods">
             <div className="bg-akshaya-light rounded-lg p-4 shadow-sm mb-4">
-              <h3 className="text-md font-medium text-gray-800 mb-1">Payment Methods</h3>
+              <h3 className="text-md font-medium text-gray-800 mb-1">{t('paymentMethods')}</h3>
               <p className="text-sm text-gray-600">
-                Manage your saved payment options for quick and easy transactions. Add UPI IDs or card details for secure payments.
+                {t('paymentMethodsDescription')}
               </p>
             </div>
             
             <Card>
               <CardHeader>
-                <CardTitle>Your Payment Methods</CardTitle>
+                <CardTitle>{t('paymentMethods')}</CardTitle>
                 <CardDescription>
-                  Manage your saved payment options
+                  {t('paymentMethodsDescription')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -196,11 +198,11 @@ const Payments: React.FC = () => {
                     <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
                       <CreditCard className="text-gray-400" size={24} />
                     </div>
-                    <h3 className="text-base font-medium">No payment methods</h3>
-                    <p className="text-sm text-gray-500 mt-1">Add a payment method to enable faster checkout</p>
+                    <h3 className="text-base font-medium">{t('noPaymentMethods')}</h3>
+                <h3 className="text-sm font-medium mb-2">{t('selectPaymentMethod')}</h3>
                   </div>
                 ) : (
-                  <div className="space-y-3">
+                    <h4 className="text-xs text-gray-500">{t('savedMethods')}</h4>
                     {savedMethods.map(method => (
                       <div key={method.id} className="flex justify-between items-center border rounded-lg p-3">
                         <div className="flex items-center">
@@ -245,7 +247,7 @@ const Payments: React.FC = () => {
                 
                 <Button className="w-full mt-4" onClick={() => setActiveTab("payment")}>
                   <Plus size={16} className="mr-2" />
-                  Add New Payment Method
+                  {t('addNewPaymentMethod')}
                 </Button>
               </CardContent>
             </Card>
@@ -253,15 +255,15 @@ const Payments: React.FC = () => {
 
           <TabsContent value="payment">
             <div className="bg-akshaya-light rounded-lg p-4 shadow-sm mb-4">
-              <h3 className="text-md font-medium text-gray-800 mb-1">Make a Payment</h3>
+              <h3 className="text-md font-medium text-gray-800 mb-1">{t('payNow')}</h3>
               <p className="text-sm text-gray-600">
-                Complete payments for government services quickly and securely. Use your saved payment methods or add a new one.
+                {t('makePaymentDescription')}
               </p>
             </div>
             
             <Card>
               <CardHeader>
-                <CardTitle>Payment Details</CardTitle>
+              <CardTitle>{t('payNow')}</CardTitle>
                 <CardDescription>
                   {service ? `Complete payment for ${service.name}` : "Make a quick payment"}
                 </CardDescription>
@@ -290,7 +292,7 @@ const Payments: React.FC = () => {
                 )}
 
                 <div className="mt-4">
-                  <h3 className="text-sm font-medium mb-2">Select Payment Method</h3>
+                  <label className="text-sm font-medium">{t('upiId')}</label>
                   {savedMethods.length > 0 && (
                     <div className="mb-4 space-y-2">
                       <h4 className="text-xs text-gray-500">Saved Methods</h4>
@@ -329,25 +331,25 @@ const Payments: React.FC = () => {
                       onClick={() => setPaymentMethod('upi')}
                     >
                       <Smartphone size={24} className={paymentMethod === 'upi' ? 'text-akshaya-primary' : 'text-gray-400'} />
-                      <span className="mt-1 text-sm">UPI / Google Pay</span>
+                      <span className="mt-1 text-sm">{t('upiGooglePay')}</span>
                       {paymentMethod === 'upi' && (
                         <div className="absolute top-1 right-1 bg-akshaya-primary rounded-full p-0.5">
-                          <Check size={12} className="text-white" />
+                    <label className="text-sm font-medium">{t('cardNumber')}</label>
                         </div>
                       )}
                     </div>
                     <div 
-                      className={`border rounded-lg p-3 flex flex-col items-center cursor-pointer relative ${paymentMethod === 'card' ? 'border-akshaya-primary bg-akshaya-light' : 'border-gray-200'}`}
+                      <label className="text-sm font-medium">{t('expiryDate')}</label>
                       onClick={() => setPaymentMethod('card')}
                     >
                       <CreditCard size={24} className={paymentMethod === 'card' ? 'text-akshaya-primary' : 'text-gray-400'} />
-                      <span className="mt-1 text-sm">Credit/Debit Card</span>
+                      <label className="text-sm font-medium">{t('cvv')}</label>
                       {paymentMethod === 'card' && (
-                        <div className="absolute top-1 right-1 bg-akshaya-primary rounded-full p-0.5">
+                  <h3 className="text-sm font-medium">{t('service')}:</h3>
                           <Check size={12} className="text-white" />
                         </div>
-                      )}
-                    </div>
+                    <label className="text-sm font-medium">{t('nameOnCard')}</label>
+                    <Input placeholder={t('nameOnCard')} />
                   </div>
                 </div>
 
@@ -407,10 +409,10 @@ const Payments: React.FC = () => {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      Processing...
+                      {t('processing')}
                     </span>
                   ) : (
-                    `Pay ₹${service ? service.fee : '0'}`
+                    `${t('pay')} ₹${service ? service.fee : '0'}`
                   )}
                 </Button>
               </CardFooter>
@@ -420,7 +422,7 @@ const Payments: React.FC = () => {
 
         <div className="mt-6 text-center">
           <p className="text-xs text-gray-500">
-            Secured by Akshaya Payment Gateway
+            {t('securedBy')}
           </p>
           <div className="flex justify-center space-x-2 mt-2">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/200px-MasterCard_Logo.svg.png" alt="Mastercard" className="h-6" />

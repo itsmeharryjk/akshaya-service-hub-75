@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Home, FileText, CreditCard, User, ChevronLeft, Bell } from "lucide-react";
+import { Home, FileText, CreditCard, User, ChevronLeft, Bell, FileCheck } from "lucide-react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
@@ -173,6 +173,10 @@ const Layout: React.FC<LayoutProps> = ({
           <Link to="/documents" className={`nav-item ${isActive('/documents') ? 'active' : ''}`}>
             <FileText size={20} />
             <span>{t('documents')}</span>
+          </Link>
+          <Link to="/processed-documents" className={`nav-item ${isActive('/processed-documents') ? 'active' : ''}`}>
+            <FileCheck size={20} />
+            <span>{t('processedDocuments')}</span>
           </Link>
           <Link to="/payment/quick" className={`nav-item ${isActive('/payment') ? 'active' : ''}`}>
             <CreditCard size={20} />

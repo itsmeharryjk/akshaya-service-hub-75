@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Layout from "@/components/Layout";
 import { deleteDocument, getServiceById, getStoredDocuments, saveDocument } from "@/lib/data-service";
 import { ScannedDocument } from "@/lib/types";
@@ -11,6 +12,7 @@ import { toast } from "sonner";
 const Documents: React.FC = () => {
   const [documents, setDocuments] = useState<ScannedDocument[]>([]);
   const [viewingDoc, setViewingDoc] = useState<ScannedDocument | null>(null);
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,13 +53,12 @@ const Documents: React.FC = () => {
   };
 
   return (
-    <Layout title="My Documents" showBack={true}>
+    <Layout title={t('myDocuments')} showBack={true}>
       <div className="p-4 space-y-4">
         <div className="bg-akshaya-light rounded-lg p-4 shadow-sm">
-          <h2 className="text-lg font-medium text-akshaya-primary mb-2">My Documents</h2>
+          <h2 className="text-lg font-medium text-akshaya-primary mb-2">{t('myDocuments')}</h2>
           <p className="text-gray-600 text-sm">
-            This is where all your scanned documents are stored. You can view, send to Akshaya services, or delete your documents. 
-            Use the scan button below to add new documents.
+            {t('documentsDescription')}
           </p>
         </div>
 
@@ -66,9 +67,9 @@ const Documents: React.FC = () => {
             <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
               <FileText size={24} className="text-gray-400" />
             </div>
-            <h3 className="text-lg font-medium text-gray-700">No Documents</h3>
+            <h3 className="text-lg font-medium text-gray-700">{t('noDocuments')}</h3>
             <p className="text-sm text-gray-500 mt-2">
-              You haven't scanned or uploaded any documents yet.
+              {t('noDocumentsDescription')}
             </p>
             <Button 
               variant="outline" 
@@ -76,7 +77,7 @@ const Documents: React.FC = () => {
               onClick={handleScanDocument}
             >
               <Plus size={16} className="mr-2" />
-              Scan Your First Document
+              {t('scanFirstDocument')}
             </Button>
           </div>
         ) : (
@@ -161,7 +162,7 @@ const Documents: React.FC = () => {
             </div>
             <div className="p-4 border-t">
               <div className="flex justify-between">
-                <Button variant="outline" onClick={closeViewer}>Close</Button>
+                <Button variant="outline" onClick={closeViewer}>{t('close')}</Button>
                 <div className="space-x-2">
                   <Button 
                     variant="default" 
@@ -171,7 +172,7 @@ const Documents: React.FC = () => {
                     }}
                   >
                     <Send size={16} className="mr-2" />
-                    Send to Akshaya
+                    {t('sendToAkshaya')}
                   </Button>
                   <Button 
                     variant="destructive" 
@@ -181,7 +182,7 @@ const Documents: React.FC = () => {
                     }}
                   >
                     <Trash2 size={16} className="mr-2" />
-                    Delete
+                    {t('delete')}
                   </Button>
                 </div>
               </div>

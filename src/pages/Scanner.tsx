@@ -1,6 +1,7 @@
 
 import React, { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Camera, Aperture, RotateCw, X, Check } from "lucide-react";
@@ -9,6 +10,7 @@ import { saveDocument } from "@/lib/data-service";
 const Scanner: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -139,12 +141,12 @@ const Scanner: React.FC = () => {
   };
 
   return (
-    <Layout title="Document Scanner" showNav={false} showBack>
+    <Layout title={t('documentScanner')} showNav={false} showBack>
       <div className="flex flex-col h-full">
         <div className="p-4">
-          <h2 className="text-lg font-medium">Scan {isStandalone ? "Document" : docTypeName}</h2>
+          <h2 className="text-lg font-medium">{t('scanDocument')} {isStandalone ? t('documents') : docTypeName}</h2>
           <p className="text-sm text-gray-600 mb-4">
-            Position your document within the frame and take a clear photo
+            {t('positionDocument')}
           </p>
         </div>
 
@@ -189,7 +191,7 @@ const Scanner: React.FC = () => {
           {isStandalone && capturedImage && (
             <div className="w-full max-w-md mt-4">
               <label htmlFor="document-name" className="block text-sm font-medium text-gray-700 mb-1">
-                Document Name
+                {t('documentName')}
               </label>
               <input
                 id="document-name"
@@ -197,7 +199,7 @@ const Scanner: React.FC = () => {
                 value={documentName}
                 onChange={handleDocumentNameChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
-                placeholder="Enter document name"
+                placeholder={t('enterDocumentName')}
               />
             </div>
           )}
@@ -207,11 +209,11 @@ const Scanner: React.FC = () => {
             {!capturing && !capturedImage ? (
               <>
                 <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
-                  Upload Image
+                  {t('uploadImage')}
                 </Button>
                 <Button onClick={startCamera}>
                   <Camera size={18} className="mr-2" />
-                  Open Camera
+                  {t('openCamera')}
                 </Button>
               </>
             ) : capturing ? (
@@ -233,10 +235,10 @@ const Scanner: React.FC = () => {
               </div>
             ) : capturedImage ? (
               <div className="flex justify-center w-full space-x-4">
-                <Button variant="outline" onClick={retake}>Retake</Button>
+                <Button variant="outline" onClick={retake}>{t('retake')}</Button>
                 <Button onClick={handleSaveDocument}>
                   <Check size={18} className="mr-2" />
-                  Save Document
+                  {t('saveDocument')}
                 </Button>
               </div>
             ) : null}

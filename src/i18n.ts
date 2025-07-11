@@ -165,6 +165,7 @@ i18n
           // Service Details
           requiredDocuments: "Required Documents",
           fee: "Fee",
+          service: "Service",
           proceedToPayment: "Proceed to Payment",
           uploadAllRequired: "Please upload all required documents to proceed",
           uploaded: "Uploaded",
@@ -332,6 +333,7 @@ i18n
           // Service Details
           requiredDocuments: "ആവശ്യമായ രേഖകൾ",
           fee: "ഫീസ്",
+          service: "സേവനം",
           proceedToPayment: "പേയ്‌മെന്റിലേക്ക് പോകുക",
           uploadAllRequired: "തുടരാൻ ആവശ്യമായ എല്ലാ രേഖകളും അപ്‌ലോഡ് ചെയ്യുക",
           uploaded: "അപ്‌ലോഡ് ചെയ്തു",

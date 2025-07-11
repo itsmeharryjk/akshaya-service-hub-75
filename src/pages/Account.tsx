@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/context/AuthContext";
 import Layout from "@/components/Layout";
 import { Input } from "@/components/ui/input";
@@ -23,6 +24,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const Account: React.FC = () => {
   const { user, logout, updateUserProfile } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -45,10 +47,10 @@ const Account: React.FC = () => {
   };
 
   const menuItems = [
-    { icon: FileText, label: "My Documents", onClick: () => navigate("/documents") },
-    { icon: Shield, label: "Privacy & Security", onClick: () => toast.info("Privacy settings coming soon") },
-    { icon: Settings, label: "App Settings", onClick: () => toast.info("App settings coming soon") },
-    { icon: HelpCircle, label: "Help & Support", onClick: () => navigate("/") },
+    { icon: FileText, label: t('myDocumentsMenu'), onClick: () => navigate("/documents") },
+    { icon: Shield, label: t('privacySecurity'), onClick: () => toast.info("Privacy settings coming soon") },
+    { icon: Settings, label: t('appSettings'), onClick: () => toast.info("App settings coming soon") },
+    { icon: HelpCircle, label: t('helpSupport'), onClick: () => navigate("/") },
   ];
 
   if (!user) {
@@ -57,7 +59,7 @@ const Account: React.FC = () => {
   }
 
   return (
-    <Layout title="My Account" showBack>
+    <Layout title={t('myAccount')} showBack>
       <div className="p-4 space-y-6">
         <div className="bg-white rounded-lg p-6 shadow-sm flex flex-col items-center">
           <Avatar className="h-20 w-20 mb-3">
@@ -70,47 +72,47 @@ const Account: React.FC = () => {
           {isEditing ? (
             <div className="w-full space-y-4 mt-2">
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name">{t('fullName')}</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Enter your name"
+                  placeholder={t('fullName')}
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
+                <Label htmlFor="email">{t('emailAddress')}</Label>
                 <Input
                   id="email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="Enter your email"
+                  placeholder={t('emailAddress')}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
+                <Label htmlFor="phone">{t('phoneNumber')}</Label>
                 <Input
                   id="phone"
                   value={user.phoneNumber}
                   disabled
                   className="bg-gray-50"
                 />
-                <p className="text-xs text-gray-500">Phone number cannot be changed</p>
+                <p className="text-xs text-gray-500">{t('phoneNumberNote')}</p>
               </div>
 
               <div className="flex gap-2 mt-4">
                 <Button onClick={handleSaveProfile} className="flex-1">
-                  Save Changes
+                  {t('saveChanges')}
                 </Button>
                 <Button 
                   variant="outline" 
                   onClick={() => setIsEditing(false)} 
                   className="flex-1"
                 >
-                  Cancel
+                  {t('cancel')}
                 </Button>
               </div>
             </div>
@@ -133,7 +135,7 @@ const Account: React.FC = () => {
                 className="mt-4"
               >
                 <User size={16} className="mr-2" />
-                Edit Profile
+                {t('editProfile')}
               </Button>
             </>
           )}
@@ -165,7 +167,7 @@ const Account: React.FC = () => {
           onClick={handleLogout}
         >
           <LogOut size={16} className="mr-2" />
-          Logout
+          {t('logout')}
         </Button>
       </div>
     </Layout>

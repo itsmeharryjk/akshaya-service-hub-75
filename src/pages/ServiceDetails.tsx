@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { getServiceById, getServiceDocuments } from "@/lib/data-service";
@@ -10,6 +11,7 @@ import { Check, FileText, X } from "lucide-react";
 const ServiceDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [service, setService] = useState<Service | null>(null);
   const [uploadedDocs, setUploadedDocs] = useState<ScannedDocument[]>([]);
 
@@ -44,8 +46,8 @@ const ServiceDetails: React.FC = () => {
 
   if (!service) {
     return (
-      <Layout title="Loading..." showBack>
-        <div>Loading service details...</div>
+      <Layout title={t('loading')} showBack>
+        <div>{t('loading')}</div>
       </Layout>
     );
   }
@@ -62,7 +64,7 @@ const ServiceDetails: React.FC = () => {
         </div>
 
         <div className="bg-white rounded-lg p-4 shadow-sm">
-          <h3 className="text-md font-medium mb-4">Required Documents</h3>
+          <h3 className="text-md font-medium mb-4">{t('requiredDocuments')}</h3>
           <div className="space-y-4">
             {service.requiredDocuments.map((doc) => {
               const { isUploaded, document } = getDocumentStatus(doc);
@@ -82,7 +84,7 @@ const ServiceDetails: React.FC = () => {
                         {isUploaded && (
                           <span className="ml-2 bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full flex items-center">
                             <Check size={12} className="mr-1" />
-                            Uploaded
+                            {t('uploaded')}
                           </span>
                         )}
                       </div>
@@ -95,7 +97,7 @@ const ServiceDetails: React.FC = () => {
                       onClick={() => handleScanDocument(doc.id)}
                     >
                       <FileText size={16} className="mr-1" />
-                      {isUploaded ? "Re-scan" : "Scan"}
+                      {isUploaded ? t('rescan') : t('scan')}
                     </Button>
                   </div>
                   
@@ -125,12 +127,12 @@ const ServiceDetails: React.FC = () => {
             disabled={!allRequiredDocsUploaded()}
             onClick={() => navigate(`/payment/${service.id}`)}
           >
-            Proceed to Payment (₹{service.fee})
+            {t('proceedToPayment')} (₹{service.fee})
           </Button>
           
           {!allRequiredDocsUploaded() && (
             <p className="text-xs text-center text-red-500 mt-2">
-              Please upload all required documents to proceed
+              {t('uploadAllRequired')}
             </p>
           )}
         </div>
