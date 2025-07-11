@@ -5,21 +5,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Bell, 
-  CheckCircle, 
-  AlertTriangle, 
-  Info, 
-  XCircle, 
-  Trash2, 
-  Check,
-  MarkAsRead,
-  Filter,
-  Settings,
-  BellRing,
-  Calendar,
-  ChevronRight
-} from "lucide-react";
+import { Bell, CheckCircle, AlertTriangle, Info, XCircle, Trash2, Check, BookMarked as MarkAsRead, Filter, Settings, BellRing, Calendar, ChevronRight } from "lucide-react";
 import { 
   getNotifications, 
   markAsRead, 
