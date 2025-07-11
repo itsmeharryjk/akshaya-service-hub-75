@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Layout from "@/components/Layout";
 import { services, getIconByName } from "@/lib/data-service";
 import { Input } from "@/components/ui/input";
@@ -9,6 +10,7 @@ import { Button } from "@/components/ui/button";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleServiceClick = (serviceId: string) => {
@@ -26,17 +28,16 @@ const Home: React.FC = () => {
   );
 
   return (
-    <Layout title="Akshaya E-Services">
+    <Layout title={t('welcome')}>
       <div className="p-4 space-y-6">
         <div className="bg-akshaya-light rounded-lg p-4 shadow-sm">
-          <h2 className="text-lg font-medium text-akshaya-primary mb-2">Welcome to Akshaya E-Services</h2>
+          <h2 className="text-lg font-medium text-akshaya-primary mb-2">{t('welcomeMessage')}</h2>
           <p className="text-gray-600 text-sm">
-            Access government services easily from your mobile device.
-            Apply for certificates, documents, and more.
+            {t('homeDescription')}
           </p>
         </div>
 
-        <h3 className="text-lg font-medium text-gray-800">Available Services</h3>
+        <h3 className="text-lg font-medium text-gray-800">{t('availableServices')}</h3>
         
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -44,7 +45,7 @@ const Home: React.FC = () => {
           </div>
           <Input
             type="text"
-            placeholder="Search services..."
+            placeholder={t('searchServices')}
             className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -71,29 +72,27 @@ const Home: React.FC = () => {
           </div>
         ) : (
           <div className="text-center py-6">
-            <p className="text-gray-500">No services found matching "{searchQuery}"</p>
+            <p className="text-gray-500">{t('noServicesFound')} "{searchQuery}"</p>
           </div>
         )}
 
         {/* Call Akshaya button */}
         <div className="bg-white rounded-lg p-4 shadow-sm flex flex-col items-center">
-          <p className="text-sm text-gray-600 mb-3">Can't find what you're looking for?</p>
+          <p className="text-sm text-gray-600 mb-3">{t('cantFind')}</p>
           <Button 
             variant="outline" 
             className="flex items-center border-akshaya-primary text-akshaya-primary hover:bg-akshaya-light"
             onClick={handleCallAkshaya}
           >
             <Phone size={18} className="mr-2" />
-            Call Akshaya Support
+            {t('callSupport')}
           </Button>
         </div>
 
         <div className="bg-akshaya-light rounded-lg p-4 shadow-sm mt-6">
-          <h3 className="text-md font-medium text-gray-800 mb-2">About Akshaya E-Services</h3>
+          <h3 className="text-md font-medium text-gray-800 mb-2">{t('aboutTitle')}</h3>
           <p className="text-gray-600 text-sm">
-            Akshaya E-Services is a government initiative to provide easy access to various
-            services through mobile devices. Apply for documents, certificates, and make payments
-            from the comfort of your home.
+            {t('aboutDescription')}
           </p>
         </div>
       </div>

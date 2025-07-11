@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Home, FileText, CreditCard, User, ChevronLeft, Bell } from "lucide-react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -26,6 +27,7 @@ const Layout: React.FC<LayoutProps> = ({
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { t } = useTranslation();
   const [showNotifications, setShowNotifications] = useState(false);
   const notificationRef = useRef<HTMLDivElement>(null);
 
@@ -75,7 +77,7 @@ const Layout: React.FC<LayoutProps> = ({
 
   // Mock notifications for demonstration
   const notifications = [
-    { id: 1, title: "Income Certificate", message: "Your application is pending verification.", time: "2h ago" },
+    { id: 1, title: t('incomeCertificate'), message: "Your application is pending verification.", time: "2h ago" },
     { id: 2, title: "Govt. Alert", message: "New Aadhaar verification deadline extended.", time: "1d ago" },
   ];
 
@@ -121,7 +123,7 @@ const Layout: React.FC<LayoutProps> = ({
                   <div ref={notificationRef} className="absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg overflow-hidden z-20">
                     <div className="py-2">
                       <div className="bg-akshaya-light p-3 rounded-lg mx-3 my-2">
-                        <p className="text-sm text-gray-700">Stay updated with important alerts about your applications and government announcements</p>
+                        <p className="text-sm text-gray-700">{t('stayUpdated')}</p>
                       </div>
                       {notifications.length > 0 ? (
                         <>
@@ -136,7 +138,7 @@ const Layout: React.FC<LayoutProps> = ({
                           ))}
                         </>
                       ) : (
-                        <div className="px-4 py-3 text-sm text-gray-500">No new notifications</div>
+                        <div className="px-4 py-3 text-sm text-gray-500">{t('noNotifications')}</div>
                       )}
                     </div>
                   </div>
@@ -166,15 +168,15 @@ const Layout: React.FC<LayoutProps> = ({
         <nav className="mobile-bottom-nav">
           <Link to="/" className={`nav-item ${isActive('/') ? 'active' : ''}`}>
             <Home size={20} />
-            <span>Home</span>
+            <span>{t('home')}</span>
           </Link>
           <Link to="/documents" className={`nav-item ${isActive('/documents') ? 'active' : ''}`}>
             <FileText size={20} />
-            <span>Documents</span>
+            <span>{t('documents')}</span>
           </Link>
           <Link to="/payment/quick" className={`nav-item ${isActive('/payment') ? 'active' : ''}`}>
             <CreditCard size={20} />
-            <span>Payments</span>
+            <span>{t('payments')}</span>
           </Link>
         </nav>
       )}
